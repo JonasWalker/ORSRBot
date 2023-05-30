@@ -137,10 +137,12 @@ def emptyInventoryOfCookedFish():
 
 
 def testImage():
-    points = findFire()
-    print("points: ", points)
-    if points == []:
-        print("Found nothing")
+    time.sleep(3)
+    pyautogui.scroll(1500)
+    # points = findFire()
+    # print("points: ", points)
+    # if points == []:
+    #     print("Found nothing")
 
     # point = points[0]
     # pyautogui.moveTo(point[0], point[1], 1)
