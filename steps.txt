@@ -1,0 +1,18 @@
+1. find fishingSpot
+2. click on fishingSpot
+3. sleep 30 secs
+4. check for youCantCarryAnymoreFish message
+    if True
+        find fire
+        click on fire
+        sleep(10)
+        find cookSalmonButton
+        click cookSalmonButton
+        sleep(20)
+        find cookTroutButton
+        click cookTroutButton
+        sleep(20)
+        drop all fish
+        repeat from step one
+    else
+        
