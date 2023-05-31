@@ -29,8 +29,7 @@ vision_thing = Vision('fishingSpot.jpg')
 
 # start fishing process
 # assume inventory is empty (exept rod and feathers)
-
-looped = 0
+# assume inventory is closed
 
 
 def fishing():
@@ -51,26 +50,20 @@ def fishing():
             print("Didnt find fire")
         pyautogui.moveTo(points[0], points[1], 1)
         pyautogui.click(points[0], points[1])
-        time.sleep(7)
+        time.sleep(5)
 
-        print("Looking for cookTroutButton")
-        points = findSomethingBasic('cookTroutButton.jpg', .70)  
-        point = points[0]
-        pyautogui.moveTo(point[0], point[1], 1)
-        pyautogui.click(point[0], point[1])
+        print("Cooking first fish")
+        pyautogui.press('space')
         time.sleep(35)
 
         print("Looking for fire")
         points = findFire()
         pyautogui.moveTo(points[0], points[1], 1)
         pyautogui.click(points[0], points[1])
-        time.sleep(2)
+        time.sleep(3)
 
-        print("Looking for cookSalmonButton")
-        points = findSomethingBasic('cookSalmonButton.jpg', .70)
-        point = points[0]
-        pyautogui.moveTo(point[0], point[1], 1)
-        pyautogui.click(point[0], point[1])
+        print("Cooking second fish. If any")
+        pyautogui.press('space')
         time.sleep(35)
 
         print("Dropping inventory")
@@ -91,7 +84,7 @@ def findFire():
     while(True):
         vision_thing.switchImage('fire.jpg')
         screenshot = wincap.get_screenshot()
-        points = vision_thing.find(screenshot, 0.60, 'points')
+        points = vision_thing.find(screenshot, 0.70, 'points')
         if(points != []):
             break
         
@@ -101,7 +94,7 @@ def findFire():
 def findFishingSpot():
     points = None  
     while(True):
-        vision_thing.switchImage('fishingSpot.jpg')
+        vision_thing.switchImage('fishingSpot2.jpg')
         screenshot = wincap.get_screenshot()
         points = vision_thing.find(screenshot, 0.70, 'points')
         if(points != []):
@@ -118,6 +111,7 @@ def findSomethingBasic(image, threshold=0.8):
     return points
 
 def emptyInventoryOfCookedFish():
+    pyautogui.press('F1')
     points = findSomethingBasic('cookedSalmon.jpg', .90)
     print("point: ", points)
     for point in points:
@@ -134,26 +128,39 @@ def emptyInventoryOfCookedFish():
         pyautogui.keyUp('shift')
 
     print("empty inventory complete")
+    pyautogui.press('F1')
 
 
 def testImage():
     time.sleep(3)
-    pyautogui.scroll(1500)
-    # points = findFire()
-    # print("points: ", points)
-    # if points == []:
-    #     print("Found nothing")
+    pyautogui.press('space')
 
+def testFishingSpot():
+    vision_thing.switchImage('fishingSpot2.jpg')
+    # vision_thing.switchImage('fire.jpg')
+    screenshot = wincap.get_screenshot()
+    points = vision_thing.find(screenshot, .8, 'points')
+    print("points: ", points)
+    print("pointsLen: ", len(points))
+    if len(points) > 1:
+        points = points[0]
+    
     # point = points[0]
-    # pyautogui.moveTo(point[0], point[1], 1)
-    # pyautogui.click(point[0], point[1])
+    print("points: ", points)
+
+    emptyInventoryOfCookedFish()
+
+def testFireSpot():
+    points = findFire()
+    print("Fire points: ", points)
+
+def zoom():    
+    time.sleep(3)
+    pyautogui.scroll(-2500)
 
 
 startFishingButton = Button(root, text="Start fishing", command=fishing)
 startFishingButton.pack()
-
-clostButton = Button(root, text="Exit", command=close)
-clostButton.pack()
 
 testButton = Button(root, text="test image", command=testImage)
 testButton.pack()
@@ -161,4 +168,16 @@ testButton.pack()
 dropButton = Button(root, text="drop fish", command=emptyInventoryOfCookedFish)
 dropButton.pack()
 
+zoomButton = Button(root, text="zoom", command=zoom)
+zoomButton.pack()
+
+fishingSpotButton = Button(root, text="find fishing spot", command=testFishingSpot)
+fishingSpotButton.pack()
+
+fireSpotButton = Button(root, text="find fire spot", command=testFireSpot)
+fireSpotButton.pack()
+
+
+clostButton = Button(root, text="Exit", command=close)
+clostButton.pack()
 root.mainloop()
