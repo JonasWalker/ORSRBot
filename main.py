@@ -38,8 +38,8 @@ def fishing():
     pyautogui.click(points[0], points[1])
     time.sleep(15)
 
-    print("Looking for youCantCarryAnymoreFish")
-    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.7)
+    print("Looking if still fishing")
+    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.8)
     if points == []:
         print("still need to fish")
         fishing()
@@ -132,8 +132,17 @@ def emptyInventoryOfCookedFish():
 
 
 def testImage():
-    time.sleep(3)
-    pyautogui.press('space')
+    vision_thing.switchImage('fishing.jpg')
+    # vision_thing.switchImage('fire.jpg')
+    screenshot = wincap.get_screenshot()
+    points = vision_thing.find(screenshot, .85, 'points')
+    print("points: ", points)
+    print("pointsLen: ", len(points))
+    if len(points) > 1:
+        points = points[0]
+    
+    # point = points[0]
+    print("points: ", points)
 
 def testFishingSpot():
     vision_thing.switchImage('fishingSpot2.jpg')
@@ -158,6 +167,11 @@ def zoom():
     time.sleep(3)
     pyautogui.scroll(-2500)
 
+def getMousePosition():
+    time.sleep(3)
+    points = pyautogui.position()
+    print("Mouse Position: ", points)
+
 
 startFishingButton = Button(root, text="Start fishing", command=fishing)
 startFishingButton.pack()
@@ -176,6 +190,9 @@ fishingSpotButton.pack()
 
 fireSpotButton = Button(root, text="find fire spot", command=testFireSpot)
 fireSpotButton.pack()
+
+positionButton = Button(root, text="get mouse position", command=getMousePosition)
+positionButton.pack()
 
 
 clostButton = Button(root, text="Exit", command=close)
