@@ -39,7 +39,7 @@ def fishing():
     time.sleep(15)
 
     print("Looking if still fishing")
-    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.8)
+    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.7)
     if points == []:
         print("still need to fish")
         fishing()
@@ -50,11 +50,15 @@ def fishing():
             print("Didnt find fire")
         pyautogui.moveTo(points[0], points[1], 1)
         pyautogui.click(points[0], points[1])
-        time.sleep(5)
+        time.sleep(5)            
 
         print("Cooking first fish")
         pyautogui.press('space')
-        time.sleep(35)
+        while(True):
+            time.sleep(5)
+            points = findSomethingBasic('notCooking.jpg', 0.7)
+            if points != []:
+                break
 
         print("Looking for fire")
         points = findFire()
@@ -64,7 +68,11 @@ def fishing():
 
         print("Cooking second fish. If any")
         pyautogui.press('space')
-        time.sleep(35)
+        while(True):
+            time.sleep(5)
+            points = findSomethingBasic('notCooking.jpg', 0.7)
+            if points != []:
+                break
 
         print("Dropping inventory")
         emptyInventoryOfCookedFish()
@@ -132,10 +140,10 @@ def emptyInventoryOfCookedFish():
 
 
 def testImage():
-    vision_thing.switchImage('fishing.jpg')
+    vision_thing.switchImage('notCooking.jpg')
     # vision_thing.switchImage('fire.jpg')
     screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, .85, 'points')
+    points = vision_thing.find(screenshot, .70, 'points')
     print("points: ", points)
     print("pointsLen: ", len(points))
     if len(points) > 1:
