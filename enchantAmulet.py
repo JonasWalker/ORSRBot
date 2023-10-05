@@ -32,55 +32,31 @@ vision_thing = Vision('fishingSpot.jpg')
 # assume inventory is closed
 
 
-def fishing():
-    points = findFishingSpot()        
-    pyautogui.moveTo(points[0], points[1], 1)
-    pyautogui.click(points[0], points[1])
-    time.sleep(15)
+def enchantAmulet():
+    points = findSomethingBasic('enchantAmulet/echantSpell.jpg', 0.8)
+    moveToAndClick(points[0][0], points[0][1])
 
-    print("Looking if still fishing")
-    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.7)
-    if points == []:
-        print("still need to fish")
-        fishing()
-    else:
-        print("Looking for fire")
-        points = findFire()
-        if points == []:
-            print("Didnt find fire")
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(5)            
+    moveToAndClick(1762, 874)
+    time.sleep(110)
 
-        print("Cooking first fish")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
+    moveToAndClick(1064, 331)
+    # time.sleep(110)
 
-        print("Looking for fire")
-        points = findFire()
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(3)
+    moveToAndClick(1762, 874)
+    # time.sleep(110)
 
-        print("Cooking second fish. If any")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
+    moveToAndClick(754, 230)
+    # time.sleep(110)
 
-        print("Dropping inventory")
-        emptyInventoryOfCookedFish()
+    moveToAndClick(1062, 124)
+    # time.sleep(110)
 
-    fishing()
+    enchantAmulet()
 
 
-
+def moveToAndClick(x,y):
+    pyautogui.moveTo(x, y, 1)
+    pyautogui.click(x, y)
 
 def close():
    root.destroy()
@@ -181,7 +157,7 @@ def getMousePosition():
     print("Mouse Position: ", points)
 
 
-startFishingButton = Button(root, text="Start fishing", command=fishing)
+startFishingButton = Button(root, text="Start enchanting", command=enchantAmulet)
 startFishingButton.pack()
 
 testButton = Button(root, text="test image", command=testImage)
