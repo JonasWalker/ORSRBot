@@ -30,56 +30,38 @@ vision_thing = Vision('fishingSpot.jpg')
 # start fishing process
 # assume inventory is empty (exept rod and feathers)
 # assume inventory is closed
+
+
+def enchantAmulet():
+    points = findSomethingBasic('enchantAmulet/echantSpell.jpg', 0.8)
+    moveToAndClick(points[0][0], points[0][1])
+
+    moveToAndClick(1762, 874)
+    time.sleep(110)
+
+    moveToAndClick(1064, 331)
+    # time.sleep(110)
+
+    moveToAndClick(1762, 874)
+    # time.sleep(110)
+
+    moveToAndClick(754, 230)
+    # time.sleep(110)
+
+    moveToAndClick(1062, 124)
+    # time.sleep(110)
+
+    enchantAmulet()
+
+
+def moveToAndClick(x,y):
+    pyautogui.moveTo(x, y, 1)
+    pyautogui.click(x, y)
+
 def close():
    root.destroy()
 #    root.quit()
 
-def fishing():
-    points = findFishingSpot()        
-    pyautogui.moveTo(points[0], points[1], 1)
-    pyautogui.click(points[0], points[1])
-    time.sleep(15)
-
-    print("Looking if still fishing")
-    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.7)
-    if points == []:
-        print("still need to fish")
-        fishing()
-    else:
-        print("Looking for fire")
-        points = findFire()
-        if points == []:
-            print("Didnt find fire")
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(5)            
-
-        print("Cooking first fish")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
-
-        print("Looking for fire")
-        points = findFire()
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(3)
-
-        print("Cooking second fish. If any")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
-
-        print("Dropping inventory")
-        emptyInventoryOfCookedFish()
-
-    fishing()
 
 def findFire():
     points = None
@@ -132,57 +114,12 @@ def emptyInventoryOfCookedFish():
     print("empty inventory complete")
     pyautogui.press('F1')
 
-def superHeatIron():
-    while(True):
-        count = 0
-        while(True):
-            pyautogui.moveTo(4366, 977,.75)
-            pyautogui.click()
-            pyautogui.moveTo(4408, 1132, .75)
-            pyautogui.click()
-            count += 1
-            if count == 28:
-                break
-        
-        # click bank booth
-        pyautogui.moveTo(3633, 503,.75)
-        pyautogui.click()
-        # click iron inventory spot
-        pyautogui.moveTo(4313, 911,.75)
-        pyautogui.click()
-        # click bank Iron spot
-        pyautogui.moveTo(3368, 749,.75)
-        pyautogui.click()
-        # click bank X
-        pyautogui.moveTo(3616, 229,.75)
-        pyautogui.click()
-
-
-def superHeatCopper():
-    count = 0
-    while(True):
-        pyautogui.moveTo(4366, 977,.75)
-        pyautogui.click()
-        pyautogui.moveTo(4363, 1132, .75)
-        pyautogui.click()
-        count += 1
-        if count == 13:
-            break
-
-    return
 
 def testImage():
-<<<<<<< HEAD:fishing.py
-    vision_thing.switchImage('ironBankSpot.jpg')
-    # vision_thing.switchImage('fire.jpg')
-    screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, .60, 'points')
-=======
     vision_thing.switchImage('firemaking/startingSpot.jpg')
     # vision_thing.switchImage('fire.jpg')
     screenshot = wincap.get_screenshot()
     points = vision_thing.find(screenshot, .80, 'points')
->>>>>>> 51c013327524bc30c0a9464204bf1e63620d602f:main.py
     print("points: ", points)
     print("pointsLen: ", len(points))
     if len(points) > 1:
@@ -220,7 +157,7 @@ def getMousePosition():
     print("Mouse Position: ", points)
 
 
-startFishingButton = Button(root, text="Start fishing", command=fishing)
+startFishingButton = Button(root, text="Start enchanting", command=enchantAmulet)
 startFishingButton.pack()
 
 testButton = Button(root, text="test image", command=testImage)
@@ -241,11 +178,6 @@ fireSpotButton.pack()
 positionButton = Button(root, text="get mouse position", command=getMousePosition)
 positionButton.pack()
 
-positionButton = Button(root, text="Super Heat Iron", command=superHeatIron)
-positionButton.pack()
-
-positionButton = Button(root, text="Super Heat Copper", command=superHeatCopper)
-positionButton.pack()
 
 clostButton = Button(root, text="Exit", command=close)
 clostButton.pack()
