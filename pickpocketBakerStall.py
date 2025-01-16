@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 import time
-from windowcaptureNOTNEEDED import WindowCapture
+from windowcapture import WindowCapture
 from vision import Vision
 from tkinter import *
 import pyautogui
@@ -23,7 +23,7 @@ root.geometry("500x300")
 # initialize the WindowCapture class
 wincap = WindowCapture('RuneLite - Its xMythic2')
 # initialize the Vision class
-vision_thing = Vision('fishingSpot.jpg')
+vision_thing = Vision('./miningImages/miningSpot.jpg')
 
 # vision_thing = Vision('fullInventoryOfCookedFish.jpg')
 
@@ -34,71 +34,30 @@ def close():
    root.destroy()
 #    root.quit()
 
-def fishing():
-    points = findFishingSpot()        
+def mining():
+    points = findMiningSpot()        
     pyautogui.moveTo(points[0], points[1], 1)
     pyautogui.click(points[0], points[1])
-    time.sleep(15)
+    time.sleep(10)
 
-    print("Looking if still fishing")
-    points = findSomethingBasic('youCantCarryAnymoreFish.jpg', 0.7)
+    print("Looking if still can mine")
+    points = findSomethingBasic('cantMineAnymore.jpg', 0.7)
     if points == []:
-        print("still need to fish")
-        fishing()
+        print("still need to mine")
+        mining()
     else:
-        print("Looking for fire")
-        points = findFire()
-        if points == []:
-            print("Didnt find fire")
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(5)            
+        goToBank()
 
-        print("Cooking first fish")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
 
-        print("Looking for fire")
-        points = findFire()
-        pyautogui.moveTo(points[0], points[1], 1)
-        pyautogui.click(points[0], points[1])
-        time.sleep(3)
 
-        print("Cooking second fish. If any")
-        pyautogui.press('space')
-        while(True):
-            time.sleep(5)
-            points = findSomethingBasic('notCooking.jpg', 0.7)
-            if points != []:
-                break
 
-        print("Dropping inventory")
-        emptyInventoryOfCookedFish()
 
-    fishing()
-
-def findFire():
-    points = None
-    while(True):
-        vision_thing.switchImage('fire.jpg')
-        screenshot = wincap.get_screenshot()
-        points = vision_thing.find(screenshot, 0.70, 'points')
-        if(points != []):
-            break
-        
-    print(points)
-    return points[0]
-
-def findFishingSpot():
+def findMiningSpot():
     points = None  
     while(True):
-        vision_thing.switchImage('fishingSpot2.jpg')
+        vision_thing.switchImage('./miningImages/miningSpot.jpg')
         screenshot = wincap.get_screenshot()
-        points = vision_thing.find(screenshot, 0.70, 'points')
+        points = vision_thing.find(screenshot, 0.80, 'points')
         if(points != []):
             break 
     print(points[0])
@@ -132,57 +91,12 @@ def emptyInventoryOfCookedFish():
     print("empty inventory complete")
     pyautogui.press('F1')
 
-def superHeatIron():
-    while(True):
-        count = 0
-        while(True):
-            pyautogui.moveTo(4366, 977,.75)
-            pyautogui.click()
-            pyautogui.moveTo(4408, 1132, .75)
-            pyautogui.click()
-            count += 1
-            if count == 28:
-                break
-        
-        # click bank booth
-        pyautogui.moveTo(3633, 503,.75)
-        pyautogui.click()
-        # click iron inventory spot
-        pyautogui.moveTo(4313, 911,.75)
-        pyautogui.click()
-        # click bank Iron spot
-        pyautogui.moveTo(3368, 749,.75)
-        pyautogui.click()
-        # click bank X
-        pyautogui.moveTo(3616, 229,.75)
-        pyautogui.click()
-
-
-def superHeatCopper():
-    count = 0
-    while(True):
-        pyautogui.moveTo(4366, 977,.75)
-        pyautogui.click()
-        pyautogui.moveTo(4363, 1132, .75)
-        pyautogui.click()
-        count += 1
-        if count == 13:
-            break
-
-    return
 
 def testImage():
-<<<<<<< HEAD:fishing.py
-    vision_thing.switchImage('ironBankSpot.jpg')
+    vision_thing.switchImage('notCooking.jpg')
     # vision_thing.switchImage('fire.jpg')
     screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, .60, 'points')
-=======
-    vision_thing.switchImage('firemaking/startingSpot.jpg')
-    # vision_thing.switchImage('fire.jpg')
-    screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, .80, 'points')
->>>>>>> 51c013327524bc30c0a9464204bf1e63620d602f:main.py
+    points = vision_thing.find(screenshot, .70, 'points')
     print("points: ", points)
     print("pointsLen: ", len(points))
     if len(points) > 1:
@@ -206,10 +120,6 @@ def testFishingSpot():
 
     emptyInventoryOfCookedFish()
 
-def testFireSpot():
-    points = findFire()
-    print("Fire points: ", points)
-
 def zoom():    
     time.sleep(3)
     pyautogui.scroll(-2500)
@@ -220,7 +130,7 @@ def getMousePosition():
     print("Mouse Position: ", points)
 
 
-startFishingButton = Button(root, text="Start fishing", command=fishing)
+startFishingButton = Button(root, text="Start fishing", command=mining)
 startFishingButton.pack()
 
 testButton = Button(root, text="test image", command=testImage)
@@ -239,12 +149,6 @@ fireSpotButton = Button(root, text="find fire spot", command=testFireSpot)
 fireSpotButton.pack()
 
 positionButton = Button(root, text="get mouse position", command=getMousePosition)
-positionButton.pack()
-
-positionButton = Button(root, text="Super Heat Iron", command=superHeatIron)
-positionButton.pack()
-
-positionButton = Button(root, text="Super Heat Copper", command=superHeatCopper)
 positionButton.pack()
 
 clostButton = Button(root, text="Exit", command=close)
