@@ -2,8 +2,6 @@ import cv2 as cv
 import numpy as np
 import os
 import time
-from windowcaptureNOTNEEDED import WindowCapture
-from vision import Vision
 from tkinter import *
 import pyautogui
 
@@ -42,12 +40,9 @@ def clicker():
             break; 
 
 
-
-
 def close():
    root.destroy()
 #    root.quit()
-
 
 
 startFishingButton = Button(root, text="clicker", command=clicker)
