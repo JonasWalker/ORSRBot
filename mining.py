@@ -5,9 +5,6 @@ import time
 from tkinter import *
 import pyautogui
 
-# should be center of guy
-# x,y = 900, 490
-
 root = Tk()
 root.title("OSRS Bot")
 root.geometry("500x300")
