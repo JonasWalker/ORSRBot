@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 import time
-from windowcapture import WindowCapture
+from windowcaptureNOTNEEDED import WindowCapture
 from vision import Vision
 from tkinter import *
 import pyautogui
@@ -67,6 +67,29 @@ def ironChest():
     # repeat
     ironChest()
 
+def smeltCannonBalls():
+    # click on furnance
+    points = [1367,410]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(6)
+    # click on cannonball in menu
+    points = [262,1080]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(75)
+    # click on bank booth
+    points = [454,815]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(6)
+    # click on steel bar
+    points = [1006,275]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    # time.sleep(1)
+    # repeat
+    smeltCannonBalls()
 
 
 
@@ -74,45 +97,17 @@ def close():
    root.destroy()
 #    root.quit()
 
-def findSomethingBasic(image, threshold=0.8):
-    points = None  
-    vision_thing.switchImage(image)
-    screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, threshold, 'points')
-    print(points)
-    return points
-
-def testImage():
-    vision_thing.switchImage('firemaking/startingSpot.jpg')
-    # vision_thing.switchImage('fire.jpg')
-    screenshot = wincap.get_screenshot()
-    points = vision_thing.find(screenshot, .80, 'points')
-    print("points: ", points)
-    print("pointsLen: ", len(points))
-    if len(points) > 1:
-        points = points[0]
-    
-    # point = points[0]
-    print("points: ", points)
-
-def zoom():    
-    time.sleep(3)
-    pyautogui.scroll(-2500)
-
 def getMousePosition():
     time.sleep(3)
     points = pyautogui.position()
     print("Mouse Position: ", points)
 
 
-startFishingButton = Button(root, text="Start iron chest", command=ironChest)
-startFishingButton.pack()
+startIronChestButton = Button(root, text="Start iron chest", command=ironChest)
+startIronChestButton.pack()
 
-testButton = Button(root, text="test image", command=testImage)
-testButton.pack()
-
-zoomButton = Button(root, text="zoom", command=zoom)
-zoomButton.pack()
+startSmeltCannonBallsButton = Button(root, text="Start cannonballs", command=smeltCannonBalls)
+startSmeltCannonBallsButton.pack()
 
 positionButton = Button(root, text="get mouse position", command=getMousePosition)
 positionButton.pack()
