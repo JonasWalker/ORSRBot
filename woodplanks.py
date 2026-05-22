@@ -9,39 +9,51 @@ root = Tk()
 root.title("OSRS Bot")
 root.geometry("500x300")
 
-def monkfish():
+def mahoganyPlanks():
 
-    # click on range
-    points = [1561,580]
+    # click on halfway point
+    points = [2458,87]
     pyautogui.moveTo(points[0], points[1], 1)
     pyautogui.click(points[0], points[1])
-    time.sleep(7)
+    time.sleep(26)
 
-    # click on monkfish cook picture
-    points = [261,1308]
+    # click on sawmill guy
+    points = [1616,731]
     pyautogui.moveTo(points[0], points[1], 1)
     pyautogui.click(points[0], points[1])
-    time.sleep(70)
+    time.sleep(8)
+
+    # click on mahgonay plank
+    points = [666,1243]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(2)
+
+    # click on halfway point2
+    points = [2301,206]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(26)
 
     # click on bank
-    points = [937,734]
+    points = [1149,1199]
     pyautogui.moveTo(points[0], points[1], 1)
     pyautogui.click(points[0], points[1])
-    time.sleep(7)
+    time.sleep(8)
 
-    # click on bag icon
-    points = [1322,998]
-    pyautogui.moveTo(points[0], points[1], 1)
-    pyautogui.click(points[0], points[1])
-    time.sleep(1)
-
-    # click on raw monkfish
-    points = [1303,425]
+    # click on plank
+    points = [2337,947]
     pyautogui.moveTo(points[0], points[1], 1)
     pyautogui.click(points[0], points[1])
     time.sleep(1)
 
-    monkfish()
+    # click on logs
+    points = [838,219]
+    pyautogui.moveTo(points[0], points[1], 1)
+    pyautogui.click(points[0], points[1])
+    time.sleep(1)
+
+    mahoganyPlanks()
 
 
 
@@ -55,7 +67,7 @@ def getMousePosition():
     print("Mouse Position: ", points)
 
 
-startButton = Button(root, text="Start monkfish", command=monkfish)
+startButton = Button(root, text="Start Mahogany Planks", command=mahoganyPlanks)
 startButton.pack()
 
 positionButton = Button(root, text="get mouse position", command=getMousePosition)

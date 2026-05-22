@@ -13,10 +13,10 @@ root.geometry("500x300")
 def clicker():
     count = 0
     while True:
-        time.sleep(.25)
+        time.sleep(2)
         pyautogui.click()
         count+= 1
-        if count == 720:
+        if count == 4000:
             break; 
 
 
